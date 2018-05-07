@@ -7,6 +7,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -48,8 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.linear);
-        SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
     }
@@ -176,9 +176,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //나의 위치 설정
         LatLng position = new LatLng(mLatitude , mLongitude);
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(position).title("Marker Pointed");
-        this.googleMap.addMarker(markerOptions);
+        MarkerOptions markerOptionsMy = new MarkerOptions();
+        markerOptionsMy.position(position).title("Marker Pointed").snippet("내가여기있어...")
+        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+        .alpha(0.5f);
+        this.googleMap.addMarker(markerOptionsMy);
         //화면중앙의 위치와 카메라 줌비율
         this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,15));
 
