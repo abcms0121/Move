@@ -48,7 +48,8 @@
         android:id="@+id/textView9"
         android:layout_width="match_parent"
         android:layout_height="100px"
-        android:text="                                                        로그인"
+        android:gravity="center"
+        android:text="로그인"
         android:onClick="onButtonClick4"/>
 
 
