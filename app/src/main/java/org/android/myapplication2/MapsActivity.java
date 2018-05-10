@@ -2,18 +2,18 @@ package org.android.myapplication2;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import com.google.android.gms.maps.CameraUpdate;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import android.view.View;
 import android.widget.Toast;
 import android.content.Intent;
-import android.net.Uri;
-import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,30 +24,32 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.RelativeLayout;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
+{
 
     GoogleMap googleMap;
     MapFragment mapFragment;
+    //마커위해 추
     LocationManager locationManager;
     RelativeLayout boxMap;
     //나의 위도 경도 고도
     double mLatitude;  //위도
     double mLongitude;
-    private GoogleMap mMap;
+
+    public MarkerOptions markerOptionsMy = new MarkerOptions();//마커객체를위해추가
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.linear);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
     }
@@ -148,6 +150,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         public void onProviderDisabled(String provider) { }
     };
 
+
     //구글맵 생성 콜백
 
 
@@ -164,7 +167,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(GoogleMap googleMap)
+    {
         this.googleMap = googleMap;
 
         //지도타입 - 일반
@@ -172,27 +176,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //나의 위치 설정
         LatLng position = new LatLng(mLatitude , mLongitude);
-
+        MarkerOptions markerOptionsMy = new MarkerOptions();
+        markerOptionsMy.position(position).title("Marker Pointed").snippet("내가여기있어...").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).alpha(0.5f);
+        this.googleMap.addMarker(markerOptionsMy);
         //화면중앙의 위치와 카메라 줌비율
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,15));
+
+
+
+
+
 
         //지도 보여주기
         boxMap.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
 
 
 }
-
-
-
-
